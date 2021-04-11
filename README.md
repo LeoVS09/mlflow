@@ -6,10 +6,10 @@ MLflow not setup offical image, so I've created one...
 
 ## Run MLflow UI server
 
-For run MLflow sever locally, just run image with volume your mlflow runs folder
+For run MLflow sever locally, just copy docker-compose content and run
 
 ```bash
-docker run -it --rm -v ${PWD}/mlruns:/mlruns --name mlflow -p 5000:5000 leovs09/mlflow:0.1.0
+docker-compose run --rm --service-ports mlflow
 ```
 
 And open <http://localhost:5000>
@@ -35,6 +35,10 @@ after build complete just push image to docker registry
 ```bash
 make push
 ```
+
+## Important
+
+mlflow server will fail against a database-backed store with an out-of-date database schema. To prevent this, upgrade your database schema to the latest supported version using mlflow db upgrade [db_uri]. Schema migrations can result in database downtime, may take longer on larger databases, and are not guaranteed to be transactional. You should always take a backup of your database prior to running mlflow db upgrade - consult your database’s documentation for instructions on taking a backup.
 
 ## Changelog
 
